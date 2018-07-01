@@ -8,6 +8,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
+ * okhttp工具类
  * Created by zhoutianjie on 2018/6/28.
  */
 
@@ -54,4 +55,5 @@ public class OkhttpUtil {
                 .build();
         client.newCall(request).enqueue(callback);
     }
+
 }
