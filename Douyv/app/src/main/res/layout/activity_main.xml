@@ -1,18 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ztj.douyu.main.view.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-</android.support.constraint.ConstraintLayout>
+    <RadioGroup
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:weightSum="4">
+        <RadioButton
+            android:singleLine="true"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="@drawable/tab_home_item"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/home"
+            android:textColor="@color/gray_0"/>
+        <RadioButton
+            android:singleLine="true"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="@drawable/tab_classify_item"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/calssify"
+            android:textColor="@color/gray_0"/>
+        <RadioButton
+            android:singleLine="true"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="@drawable/tab_heart_item"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/like"
+            android:textColor="@color/gray_0"/>
+        <RadioButton
+            android:singleLine="true"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="@drawable/tab_user_item"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/mine"
+            android:textColor="@color/gray_0"/>
+    </RadioGroup>
+
+</RelativeLayout>

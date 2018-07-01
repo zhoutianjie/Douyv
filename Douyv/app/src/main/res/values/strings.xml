@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Douyu</string>
+
+    <string name="home">首页</string>
+    <string name="calssify">分类</string>
+    <string name="like">喜欢</string>
+    <string name="mine">我的</string>
 </resources>
