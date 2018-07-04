@@ -1,4 +1,4 @@
-package com.ztj.douyu.main.view;
+package com.ztj.douyu.main.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,12 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class HomeFragment extends Fragment {
+public class MineFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       //test
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 }
