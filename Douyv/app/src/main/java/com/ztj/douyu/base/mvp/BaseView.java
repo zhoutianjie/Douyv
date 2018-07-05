@@ -8,6 +8,4 @@ package com.ztj.douyu.base.mvp;
 
 public interface BaseView {
 
-    void showToast(String msg);
-
 }
