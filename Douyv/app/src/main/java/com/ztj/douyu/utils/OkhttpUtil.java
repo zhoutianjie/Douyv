@@ -1,11 +1,18 @@
 package com.ztj.douyu.utils;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * okhttp工具类
@@ -15,9 +22,11 @@ import okhttp3.Response;
 public class OkhttpUtil {
 
     private OkHttpClient client;
+    private ExecutorService fixedPool;
 
     public OkhttpUtil() {
         client = new OkHttpClient();
+        fixedPool = Executors.newFixedThreadPool(10);
     }
 
     private static class InnerSingleTon{
@@ -55,5 +64,6 @@ public class OkhttpUtil {
                 .build();
         client.newCall(request).enqueue(callback);
     }
+
 
 }
