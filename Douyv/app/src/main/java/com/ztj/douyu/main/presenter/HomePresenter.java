@@ -16,4 +16,7 @@ public class HomePresenter extends BasePresenter<onHomeView> {
         //去本地数据库读以前观看过的前8个游戏类型返回界面作为tablayout的显示。
 
     }
+
+
+
 }
