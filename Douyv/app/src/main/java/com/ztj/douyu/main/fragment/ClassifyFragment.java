@@ -42,6 +42,8 @@ public class ClassifyFragment extends Fragment implements onClassifyView {
         //防止onCreateView被重复调用
         if(rootView == null){
             rootView = inflater.inflate(R.layout.fragment_classify,null);
+            initView();
+            registerListener();
         }else{
             ViewGroup parent = (ViewGroup) rootView.getParent();
             if(parent!=null){
@@ -55,10 +57,6 @@ public class ClassifyFragment extends Fragment implements onClassifyView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initView();
-        registerListener();
-        presenter.getAllGamesTypes();
-
     }
 
 
@@ -72,6 +70,7 @@ public class ClassifyFragment extends Fragment implements onClassifyView {
     @Override
     public void onResume() {
         super.onResume();
+        presenter.getAllGamesTypes();
     }
 
     @Override
@@ -102,7 +101,7 @@ public class ClassifyFragment extends Fragment implements onClassifyView {
     }
 
     private void initView() {
-        recyclerView = getView().findViewById(R.id.recycler_view);
+        recyclerView = rootView.findViewById(R.id.recycler_view);
         GridLayoutManager manager = new GridLayoutManager(getContext(),4);
 
         adapter = new GameTypesAdapter(null,getActivity());
