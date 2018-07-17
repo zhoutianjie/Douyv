@@ -2,6 +2,7 @@ package com.ztj.douyu.main.view;
 
 import com.ztj.douyu.base.mvp.BaseView;
 import com.ztj.douyu.bean.GameType;
+import com.ztj.douyu.db.GameTypeInfo;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ import java.util.List;
 
 public interface onHomeView extends BaseView {
 
-     void GetFrequentGameTypes(List<GameType> gameTypeList);
+     void GetFrequentGameTypes(List<GameTypeInfo> gameTypeList);
 }

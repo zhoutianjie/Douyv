@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +13,21 @@ import android.view.ViewGroup;
 
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.GameType;
+import com.ztj.douyu.db.GameTypeInfo;
+import com.ztj.douyu.main.adapter.ContentFragmentPagerAdapter;
 import com.ztj.douyu.main.presenter.HomePresenter;
 import com.ztj.douyu.main.view.onHomeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements onHomeView {
 
     private View rootView;
     private TabLayout tabLayout;
+    private ViewPager contentViewPager;
     private HomePresenter presenter;
+    private ContentFragmentPagerAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,14 +69,28 @@ public class HomeFragment extends Fragment implements onHomeView {
 
     private void initView() {
         tabLayout = rootView.findViewById(R.id.tab);
+        contentViewPager = rootView.findViewById(R.id.content_vp);
     }
 
     @Override
-    public void GetFrequentGameTypes(List<GameType> gameTypeList) {
+    public void GetFrequentGameTypes(final List<GameTypeInfo> gameTypeList) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //创建Tablayout 创建viewpager 开始加载数据显示 直播间
+               if(gameTypeList ==null || gameTypeList.size()==0)return;
+                List<Fragment> contentFragments = new ArrayList<>();
+               for(GameTypeInfo gameTypeInfo:gameTypeList){
+                   tabLayout.addTab(tabLayout.newTab().setText(gameTypeInfo.getGameTypeName()));
+                   ContentFragment fragment = new ContentFragment();
+                   Bundle bundle = new Bundle();
+                   bundle.putString("gameName",gameTypeInfo.getGameTypeName());
+                   fragment.setArguments(bundle);
+                   contentFragments.add(fragment);
+               }
+                adapter = new ContentFragmentPagerAdapter(getFragmentManager(),contentFragments);
+                contentViewPager.setAdapter(adapter);
+                //tabLayout.setupWithViewPager(contentViewPager);
+
             }
         });
     }

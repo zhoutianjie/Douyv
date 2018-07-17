@@ -17,13 +17,14 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import static com.ztj.douyu.bean.constant.DouYvUrl.DOUYV_ROOMAPI_URL;
+
 /**
  * Created by zhoutianjie on 2018/7/5.
  */
 
 public class ClassifyPresenter extends BasePresenter<onClassifyView> {
 
-    private static final String DOUYV_ROOMAPI_URL = "http://open.douyucdn.cn/api/RoomApi/";
 
     public ClassifyPresenter() {
     }
