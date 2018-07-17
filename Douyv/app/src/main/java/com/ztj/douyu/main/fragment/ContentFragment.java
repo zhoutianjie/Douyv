@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.ztj.douyu.R;
 import com.ztj.douyu.db.GameTypeInfo;
 
 /**
@@ -17,6 +20,7 @@ import com.ztj.douyu.db.GameTypeInfo;
 
 public class ContentFragment extends Fragment {
 
+    private View rootView;
 
 
     @Override
@@ -27,7 +31,44 @@ public class ContentFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        // 这里如果不做处理onCreateView还是会被重复调用
+        if(rootView==null){
+            rootView = inflater.inflate(R.layout.fragment_content,null);
+        }else{
+           ViewGroup parent = (ViewGroup) rootView.getParent();
+           if(parent!=null){
+               parent.removeView(rootView);
+           }
+        }
+
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override

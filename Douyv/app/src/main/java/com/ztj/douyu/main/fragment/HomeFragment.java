@@ -5,14 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ztj.douyu.R;
-import com.ztj.douyu.bean.GameType;
 import com.ztj.douyu.db.GameTypeInfo;
 import com.ztj.douyu.main.adapter.ContentFragmentPagerAdapter;
 import com.ztj.douyu.main.presenter.HomePresenter;
@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment implements onHomeView {
                if(gameTypeList ==null || gameTypeList.size()==0)return;
                 List<Fragment> contentFragments = new ArrayList<>();
                for(GameTypeInfo gameTypeInfo:gameTypeList){
-                   tabLayout.addTab(tabLayout.newTab().setText(gameTypeInfo.getGameTypeName()));
+                   tabLayout.addTab(tabLayout.newTab());
                    ContentFragment fragment = new ContentFragment();
                    Bundle bundle = new Bundle();
                    bundle.putString("gameName",gameTypeInfo.getGameTypeName());
@@ -89,9 +89,13 @@ public class HomeFragment extends Fragment implements onHomeView {
                }
                 adapter = new ContentFragmentPagerAdapter(getFragmentManager(),contentFragments);
                 contentViewPager.setAdapter(adapter);
-                //tabLayout.setupWithViewPager(contentViewPager);
-
+                tabLayout.setupWithViewPager(contentViewPager);
+                //不在setupWithViewpager之后设置title会导致tab为空title
+                for(int i=0;i<tabLayout.getTabCount();++i){
+                   tabLayout.getTabAt(i).setText(gameTypeList.get(i).getGameTypeName());
+               }
             }
         });
     }
+
 }
