@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +14,14 @@ import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.ztj.douyu.R;
-import com.ztj.douyu.db.GameTypeInfo;
+import com.ztj.douyu.main.view.onContentView;
+
 
 /**
  * Created by zhoutianjie on 2018/7/17.
  */
 
-public class ContentFragment extends Fragment {
+public class ContentFragment extends Fragment implements onContentView {
 
     private View rootView;
     private SmartRefreshLayout smartRefreshLayout;
@@ -39,6 +40,7 @@ public class ContentFragment extends Fragment {
         if(rootView==null){
             rootView = inflater.inflate(R.layout.fragment_content,null);
             initView();
+            registerListener();
         }else{
            ViewGroup parent = (ViewGroup) rootView.getParent();
            if(parent!=null){
@@ -54,35 +56,31 @@ public class ContentFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.content_rlr);
     }
 
+    private void registerListener(){
+
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
 
-    }
 
     @Override
     public void onResume() {
         super.onResume();
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onGetLiveRoomInfos() {
+
     }
 }
