@@ -5,12 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.ztj.douyu.R;
 import com.ztj.douyu.db.GameTypeInfo;
 
@@ -21,6 +23,8 @@ import com.ztj.douyu.db.GameTypeInfo;
 public class ContentFragment extends Fragment {
 
     private View rootView;
+    private SmartRefreshLayout smartRefreshLayout;
+    private RecyclerView recyclerView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class ContentFragment extends Fragment {
         // 这里如果不做处理onCreateView还是会被重复调用
         if(rootView==null){
             rootView = inflater.inflate(R.layout.fragment_content,null);
+            initView();
         }else{
            ViewGroup parent = (ViewGroup) rootView.getParent();
            if(parent!=null){
@@ -42,6 +47,11 @@ public class ContentFragment extends Fragment {
         }
 
         return rootView;
+    }
+
+    private void initView() {
+        smartRefreshLayout = rootView.findViewById(R.id.content_srl);
+        recyclerView = rootView.findViewById(R.id.content_rlr);
     }
 
     @Override

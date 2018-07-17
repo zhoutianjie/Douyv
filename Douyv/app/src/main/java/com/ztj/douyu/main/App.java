@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.scwang.smartrefresh.header.DropBoxHeader;
+import com.scwang.smartrefresh.header.WaterDropHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -26,8 +28,8 @@ public class App extends Application {
             @NonNull
             @Override
             public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
-                layout.setPrimaryColorsId(R.color.colorPrimary,R.color.white);
-                return new ClassicsHeader(context);
+                layout.setPrimaryColorsId(R.color.transparent,R.color.gray_0);
+                return new WaterDropHeader(context);
             }
         });
 
