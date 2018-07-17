@@ -22,10 +22,10 @@ public class ContentFragment extends Fragment {
 
     private View rootView;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Nullable

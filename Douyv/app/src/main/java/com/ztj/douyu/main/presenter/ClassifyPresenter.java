@@ -1,16 +1,24 @@
 package com.ztj.douyu.main.presenter;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.raizlabs.android.dbflow.sql.language.Condition;
+import com.raizlabs.android.dbflow.sql.language.Select;
 import com.ztj.douyu.base.mvp.BasePresenter;
 import com.ztj.douyu.bean.GameAllTypes;
 import com.ztj.douyu.bean.GameType;
+import com.ztj.douyu.db.GameTypeInfo;
+import com.ztj.douyu.db.GameTypeInfo_Table;
 import com.ztj.douyu.main.view.onClassifyView;
 import com.ztj.douyu.utils.OkhttpUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -25,6 +33,7 @@ import static com.ztj.douyu.bean.constant.DouYvUrl.DOUYV_ROOMAPI_URL;
 
 public class ClassifyPresenter extends BasePresenter<onClassifyView> {
 
+    private static ExecutorService cachePool = Executors.newCachedThreadPool();
 
     public ClassifyPresenter() {
     }
@@ -76,5 +85,24 @@ public class ClassifyPresenter extends BasePresenter<onClassifyView> {
         List<GameType> result = new ArrayList<>();
         result.addAll(gameAllTypes.getData());
         return result;
+    }
+
+    /**
+     * 更新gameType
+     */
+    public void updateGameType(final GameType gameType){
+        cachePool.execute(new Runnable() {
+            @Override
+            public void run() {
+                GameTypeInfo gameTypeInfo = new Select()
+                        .from(GameTypeInfo.class)
+                        .where(GameTypeInfo_Table.gameTypeName.eq(gameType.getGameName()))
+                        .querySingle();
+                if(gameTypeInfo!=null){
+                    gameTypeInfo.selectCount +=2;
+                    gameTypeInfo.update();
+                }
+            }
+        });
     }
 }

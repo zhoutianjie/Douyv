@@ -94,6 +94,7 @@ public class HomeFragment extends Fragment implements onHomeView {
                 for(int i=0;i<tabLayout.getTabCount();++i){
                    tabLayout.getTabAt(i).setText(gameTypeList.get(i).getGameTypeName());
                }
+
             }
         });
     }

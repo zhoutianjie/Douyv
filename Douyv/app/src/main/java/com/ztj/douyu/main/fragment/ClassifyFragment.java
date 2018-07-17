@@ -129,6 +129,10 @@ public class ClassifyFragment extends Fragment implements onClassifyView {
         adapter.setOnItemClickListener(new GameTypesAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
+                if(adapter==null)return;
+                GameType gameType = adapter.getItem(position);
+                if(gameType==null)return;
+                presenter.updateGameType(gameType);
 
             }
         });

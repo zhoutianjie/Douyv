@@ -56,7 +56,7 @@ public class GameTypesAdapter extends RecyclerView.Adapter<GameTypesAdapter.Game
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GameTypeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GameTypeViewHolder holder, final int position) {
         GameType gameType = mData.get(position);
         if(gameType==null)return;
         String ganemName = gameType.getGameName();
@@ -70,6 +70,14 @@ public class GameTypesAdapter extends RecyclerView.Adapter<GameTypesAdapter.Game
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(holder.gameIcon);
         }
+        holder.gameTypeRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(listener!=null){
+                    listener.onClick(position);
+                }
+            }
+        });
 
 
     }
@@ -100,7 +108,15 @@ public class GameTypesAdapter extends RecyclerView.Adapter<GameTypesAdapter.Game
         this.listener = listener;
     }
 
+
     public void setDatas(List<GameType> mData) {
         this.mData = mData;
+    }
+
+    public GameType getItem(int position){
+        if(mData!=null && mData.size()>0){
+            return mData.get(position);
+        }
+        return null;
     }
 }
