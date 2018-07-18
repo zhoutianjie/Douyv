@@ -14,7 +14,11 @@ import android.view.ViewGroup;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.ztj.douyu.R;
+import com.ztj.douyu.bean.RoomInfo;
+import com.ztj.douyu.main.presenter.ContentPresenter;
 import com.ztj.douyu.main.view.onContentView;
+
+import java.util.List;
 
 
 /**
@@ -26,10 +30,15 @@ public class ContentFragment extends Fragment implements onContentView {
     private View rootView;
     private SmartRefreshLayout smartRefreshLayout;
     private RecyclerView recyclerView;
+    private ContentPresenter presenter;
+    private String gameName;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter = new ContentPresenter();
+        presenter.attachView(this);
+
 
     }
 
@@ -39,8 +48,10 @@ public class ContentFragment extends Fragment implements onContentView {
         // 这里如果不做处理onCreateView还是会被重复调用
         if(rootView==null){
             rootView = inflater.inflate(R.layout.fragment_content,null);
+            initExtras();
             initView();
             registerListener();
+
         }else{
            ViewGroup parent = (ViewGroup) rootView.getParent();
            if(parent!=null){
@@ -51,6 +62,12 @@ public class ContentFragment extends Fragment implements onContentView {
         return rootView;
     }
 
+    private void initExtras(){
+        Bundle bundle = getArguments();
+        if(bundle!=null){
+            gameName = bundle.getString("gameName");
+        }
+    }
     private void initView() {
         smartRefreshLayout = rootView.findViewById(R.id.content_srl);
         recyclerView = rootView.findViewById(R.id.content_rlr);
@@ -71,16 +88,23 @@ public class ContentFragment extends Fragment implements onContentView {
     @Override
     public void onResume() {
         super.onResume();
+        presenter.getSubChannelRoomInfos(gameName);
     }
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        presenter.detachView();
     }
 
     @Override
-    public void onGetLiveRoomInfos() {
+    public void onGetLiveRoomInfosSuccess(List<RoomInfo> roomInfoList) {
+
+    }
+
+    @Override
+    public void onGetLiveRoomInfosFailed(String message) {
 
     }
 }

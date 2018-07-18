@@ -83,7 +83,8 @@ public class HomeFragment extends Fragment implements onHomeView {
                    tabLayout.addTab(tabLayout.newTab());
                    ContentFragment fragment = new ContentFragment();
                    Bundle bundle = new Bundle();
-                   bundle.putString("gameName",gameTypeInfo.getGameTypeName());
+                   bundle.putString("gameName",gameTypeInfo.getGameShortName());
+                   bundle.putInt("gameId",gameTypeInfo.getGameId());
                    fragment.setArguments(bundle);
                    contentFragments.add(fragment);
                }

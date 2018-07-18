@@ -36,6 +36,7 @@ public class ClassifyPresenter extends BasePresenter<onClassifyView> {
     private static ExecutorService cachePool = Executors.newCachedThreadPool();
 
     public ClassifyPresenter() {
+
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.ztj.douyu.main.presenter;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.raizlabs.android.dbflow.runtime.transaction.process.ProcessModelInfo;
 import com.raizlabs.android.dbflow.runtime.transaction.process.SaveModelTransaction;
@@ -32,6 +34,7 @@ public class HomePresenter extends BasePresenter<onHomeView> {
     private static final int common_game_types_num = 8;
 
     public HomePresenter() {
+
     }
 
     /**
