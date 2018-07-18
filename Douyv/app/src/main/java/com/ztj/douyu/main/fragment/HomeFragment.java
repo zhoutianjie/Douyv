@@ -1,5 +1,6 @@
 package com.ztj.douyu.main.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -74,7 +75,9 @@ public class HomeFragment extends Fragment implements onHomeView {
 
     @Override
     public void GetFrequentGameTypes(final List<GameTypeInfo> gameTypeList) {
-        getActivity().runOnUiThread(new Runnable() {
+        Activity activity = getActivity();
+        if (activity==null)return;
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                if(gameTypeList ==null || gameTypeList.size()==0)return;

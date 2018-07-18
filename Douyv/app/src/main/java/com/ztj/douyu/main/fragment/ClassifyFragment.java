@@ -1,5 +1,6 @@
 package com.ztj.douyu.main.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -81,7 +82,9 @@ public class ClassifyFragment extends Fragment implements onClassifyView {
 
     @Override
     public void onGetAllGamesSuccess(final List<GameType> list) {
-        getActivity().runOnUiThread(new Runnable() {
+        Activity activity = getActivity();
+        if(activity==null)return;
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 adapter.setDatas(list);
@@ -92,7 +95,9 @@ public class ClassifyFragment extends Fragment implements onClassifyView {
 
     @Override
     public void onGetAllGamesFailed(String str) {
-        getActivity().runOnUiThread(new Runnable() {
+        Activity activity = getActivity();
+        if(activity==null)return;
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
 
