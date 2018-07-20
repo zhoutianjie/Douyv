@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.RoomInfo;
+import com.ztj.douyu.main.adapter.RoomInfosAdapter;
 import com.ztj.douyu.main.presenter.ContentPresenter;
 import com.ztj.douyu.main.view.onContentView;
 
@@ -34,6 +36,8 @@ public class ContentFragment extends Fragment implements onContentView {
     private RecyclerView recyclerView;
     private ContentPresenter presenter;
     private String gameName;
+    private RoomInfosAdapter adapter;
+    private GridLayoutManager gridLayoutManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,7 +105,7 @@ public class ContentFragment extends Fragment implements onContentView {
     }
 
     @Override
-    public void onGetLiveRoomInfosSuccess(List<RoomInfo> roomInfoList) {
+    public void onGetLiveRoomInfosSuccess(final List<RoomInfo> roomInfoList) {
 
 //        Log.e(gameName,"size "+roomInfoList.size());
 //        for(RoomInfo roomInfo:roomInfoList){
@@ -113,7 +117,14 @@ public class ContentFragment extends Fragment implements onContentView {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
+                if(adapter==null){
+                    adapter = new RoomInfosAdapter(roomInfoList,getContext());
+                }
+                if(gridLayoutManager==null){
+                    gridLayoutManager = new GridLayoutManager(getContext(), 2);
+                }
+                recyclerView.setLayoutManager(gridLayoutManager);
+                recyclerView.setAdapter(adapter);
             }
         });
     }
