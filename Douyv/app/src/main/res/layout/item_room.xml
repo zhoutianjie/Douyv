@@ -20,10 +20,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <com.ztj.douyu.widgt.SelectableRoundedImageView
                 android:id="@+id/room_iv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                app:sriv_left_top_corner_radius="@dimen/dimen_5"
+                app:sriv_right_top_corner_radius="@dimen/dimen_5"/>
+
             <TextView
                 android:id="@+id/online_tv"
                 android:layout_marginRight="3dp"

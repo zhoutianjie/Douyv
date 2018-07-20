@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.GameType;
 import com.ztj.douyu.utils.StringUtils;
+import com.ztj.douyu.widgt.SelectableRoundedImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +93,7 @@ public class GameTypesAdapter extends RecyclerView.Adapter<GameTypesAdapter.Game
     public class GameTypeViewHolder extends RecyclerView.ViewHolder{
         public RelativeLayout gameTypeRl;
         public CardView cardView;
-        public ImageView gameIcon;
+        public SelectableRoundedImageView gameIcon;
         public TextView gameName;
 
         public GameTypeViewHolder(View itemView) {

@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,6 +14,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.RoomInfo;
 import com.ztj.douyu.utils.StringUtils;
+import com.ztj.douyu.widgt.SelectableRoundedImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +97,7 @@ public class RoomInfosAdapter extends RecyclerView.Adapter<RoomInfosAdapter.Room
 
     public class RoomInfoViewHolder extends RecyclerView.ViewHolder{
 
-        public ImageView roomImg;
+        public SelectableRoundedImageView roomImg;
         public TextView  online;
         public TextView  nickName;
         public TextView  roomName;
