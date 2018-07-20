@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/content_srl"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
+   <com.scwang.smartrefresh.layout.SmartRefreshLayout
+       android:id="@+id/content_srl"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <android.support.v7.widget.RecyclerView
+           android:id="@+id/content_rlr"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"/>
 
-    <!--这边加一个轮播图 轮播5个房间的图片 下面就直接两排显示直播列表
-     直播列表向上滑动时可以隐藏轮播图,向下滑动最终会显示轮播图，想想如何实现-->
+   </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/content_rlr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>
