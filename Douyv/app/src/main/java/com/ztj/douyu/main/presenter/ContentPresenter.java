@@ -28,7 +28,7 @@ import okhttp3.ResponseBody;
 public class ContentPresenter extends BasePresenter<onContentView> {
 
     private static ExecutorService contentSinglePool = Executors.newSingleThreadExecutor();
-    private long lastLodingTime = 0;
+
     public ContentPresenter() {
 
     }
@@ -48,7 +48,7 @@ public class ContentPresenter extends BasePresenter<onContentView> {
                     if(isViewAttached()){
                         getView().onGetLiveRoomInfosFailed(e.getMessage());
                     }
-                   lastLodingTime = System.currentTimeMillis();
+
                }
 
                @Override
@@ -73,7 +73,7 @@ public class ContentPresenter extends BasePresenter<onContentView> {
                            getView().onGetLiveRoomInfosFailed(response.message());
                        }
                    }
-                   lastLodingTime = System.currentTimeMillis();
+
                }
            });
 

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.RoomInfo;
@@ -23,6 +24,8 @@ import com.ztj.douyu.main.presenter.ContentPresenter;
 import com.ztj.douyu.main.view.onContentView;
 
 import java.util.List;
+
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
 
 /**
@@ -57,6 +60,7 @@ public class ContentFragment extends Fragment implements onContentView {
             initExtras();
             initView();
             registerListener();
+            presenter.getSubChannelRoomInfos(gameName);
 
         }else{
            ViewGroup parent = (ViewGroup) rootView.getParent();
@@ -80,7 +84,21 @@ public class ContentFragment extends Fragment implements onContentView {
     }
 
     private void registerListener(){
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if(newState == SCROLL_STATE_IDLE){
+                    Glide.with(getActivity()).resumeRequests();//停止状态下恢复加载
+                }else{
+                    Glide.with(getActivity()).pauseRequests();//滚动状态下取消加载(这么操作也不会出现图片错位显示的情形)
+                }
+            }
 
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     @Override
@@ -94,7 +112,7 @@ public class ContentFragment extends Fragment implements onContentView {
     @Override
     public void onResume() {
         super.onResume();
-        presenter.getSubChannelRoomInfos(gameName);
+
     }
 
 
