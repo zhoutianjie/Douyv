@@ -69,12 +69,7 @@ public class RoomInfosAdapter extends RecyclerView.Adapter<RoomInfosAdapter.Room
         if(!StringUtils.isNull(nickName)){
             holder.nickName.setText(nickName);
         }
-        String src_url;
-        if(roomInfo.getGameId()== DouYvUrl.YZ){
-            src_url = roomInfo.getVerticalSrc();
-        }else{
-            src_url = roomInfo.getRoomSrc();
-        }
+        String src_url= roomInfo.getRoomSrc();
         if(!StringUtils.isNull(src_url)){
             Glide.with(mContext).load(src_url)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)
