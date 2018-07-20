@@ -27,7 +27,7 @@
                 app:sriv_left_top_corner_radius="@dimen/dimen_5"
                 app:sriv_right_top_corner_radius="@dimen/dimen_5"
                 android:src="@mipmap/douyv_default"/>
-            <!--这个圆角ImageView最好加一个默认图片-->
+
 
             <TextView
                 android:id="@+id/online_tv"
