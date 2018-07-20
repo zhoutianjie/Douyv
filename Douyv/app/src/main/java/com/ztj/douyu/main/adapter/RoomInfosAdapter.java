@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.RoomInfo;
+import com.ztj.douyu.bean.constant.DouYvUrl;
 import com.ztj.douyu.utils.StringUtils;
 import com.ztj.douyu.widgt.SelectableRoundedImageView;
 
@@ -68,8 +69,12 @@ public class RoomInfosAdapter extends RecyclerView.Adapter<RoomInfosAdapter.Room
         if(!StringUtils.isNull(nickName)){
             holder.nickName.setText(nickName);
         }
-
-        String src_url = roomInfo.getRoomSrc();
+        String src_url;
+        if(roomInfo.getGameId()== DouYvUrl.YZ){
+            src_url = roomInfo.getVerticalSrc();
+        }else{
+            src_url = roomInfo.getRoomSrc();
+        }
         if(!StringUtils.isNull(src_url)){
             Glide.with(mContext).load(src_url)
                     .diskCacheStrategy(DiskCacheStrategy.RESULT)

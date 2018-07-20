@@ -48,7 +48,6 @@ public class ContentFragment extends Fragment implements onContentView {
         presenter = new ContentPresenter();
         presenter.attachView(this);
 
-
     }
 
     @Nullable

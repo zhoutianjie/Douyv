@@ -6,6 +6,8 @@ package com.ztj.douyu.bean.constant;
 
 public class DouYvUrl {
 
+    public static final int YZ = 201;//颜值分类id
+
     public static final String DOUYV_ROOMAPI_URL = "http://open.douyucdn.cn/api/RoomApi/";
     public static final String DOUYU_API = "http://capi.douyucdn.cn/api/v1/";
     //2.1平台api
