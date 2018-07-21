@@ -33,6 +33,11 @@ import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
 
 /**
+ * 界面刷新和加载更多出现的几个问题
+ * 1.用Glide框架在资源文件没有指定图片固定大小的情况下，会出现加载的时候图片大小不一的问题，不美观
+ * 尝试在adapter里面设置默认的图片，还是不行，只和布局文件中的图片大小有关。当时我用无法固定布局文件的大小，因为我不知道图片打下
+ *
+ * recyclerview的adapter.notifyDataSetChanged 这个方法在加载更多的时候 会出现不流畅的感觉，不能全部加载，改用其他方法研究一下
  * Created by zhoutianjie on 2018/7/17.
  */
 
