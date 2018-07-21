@@ -45,6 +45,7 @@ public class ContentFragment extends Fragment implements onContentView {
     private String gameName;
     private RoomInfosAdapter adapter;
     private GridLayoutManager gridLayoutManager;
+    private int mOffset = 1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,6 +113,8 @@ public class ContentFragment extends Fragment implements onContentView {
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
+                presenter.loadMoreSubChannelRoomInfos(gameName,mOffset);
 
             }
         });
@@ -207,12 +210,36 @@ public class ContentFragment extends Fragment implements onContentView {
     }
 
     @Override
-    public void onGetLiveRoomInfoMoreSuccess(List<RoomInfo> roomInfoList) {
+    public void onGetLiveRoomInfoMoreSuccess(final List<RoomInfo> roomInfoList) {
+        Activity activity = getActivity();
+        if(activity==null)return;
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(roomInfoList==null || roomInfoList.isEmpty()){
+                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
+                }else{
+                    adapter.addData(roomInfoList);
+                    adapter.notifyDataSetChanged();
+                    smartRefreshLayout.finishLoadMore();
+                    mOffset++;
+                }
 
+
+            }
+        });
     }
 
     @Override
     public void onGetLiveRoomInfoMoreFailed(String message) {
-
+        Activity activity = getActivity();
+        if(activity==null)return;
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ToastObject.getInstance().show("加载失败");
+                smartRefreshLayout.finishLoadMoreWithNoMoreData();
+            }
+        });
     }
 }

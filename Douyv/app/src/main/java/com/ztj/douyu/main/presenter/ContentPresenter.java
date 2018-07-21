@@ -120,4 +120,45 @@ public class ContentPresenter extends BasePresenter<onContentView> {
         });
     }
 
+    /**
+     * 加载更多
+     */
+    public void loadMoreSubChannelRoomInfos(String gameName,int offset){
+        String url = DouYvUrl.getDouyuSubChannelBaseTag21(gameName)+ "&offset=" + offset*20;
+        OkhttpUtil.getInstance().getAsyncResponse(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if(isViewAttached()){
+                    getView().onGetLiveRoomInfoMoreFailed(e.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    ResponseBody body = response.body();
+                    if(body!=null){
+                        String roomInfosJson = body.string();
+                        RoomInfos roomInfos = new Gson().fromJson(roomInfosJson,RoomInfos.class);
+                        List<RoomInfo> result = roomInfos.getData();
+                        if(isViewAttached()){
+                            getView().onGetLiveRoomInfoMoreSuccess(result);
+                        }
+                    }else{
+                        if(isViewAttached()){
+                            getView().onGetLiveRoomInfoMoreFailed(response.message());
+                        }
+                    }
+
+                }else{
+                    if(isViewAttached()){
+                        getView().onGetLiveRoomInfoMoreFailed(response.message());
+                    }
+                }
+
+            }
+        });
+    }
+
 }

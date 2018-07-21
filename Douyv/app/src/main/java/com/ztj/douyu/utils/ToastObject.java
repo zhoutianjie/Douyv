@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.ztj.douyu.main.App;
 
 /**
+ * 这个toast后面重新实现以下
  * Created by zhoutianjie on 2018/7/21.
  */
 

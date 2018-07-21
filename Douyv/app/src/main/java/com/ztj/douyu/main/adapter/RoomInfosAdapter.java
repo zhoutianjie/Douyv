@@ -52,6 +52,10 @@ public class RoomInfosAdapter extends RecyclerView.Adapter<RoomInfosAdapter.Room
         mData.addAll(infos);
     }
 
+    public void addData(List<RoomInfo> infos){
+        mData.addAll(infos);
+    }
+
     @NonNull
     @Override
     public RoomInfoViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
