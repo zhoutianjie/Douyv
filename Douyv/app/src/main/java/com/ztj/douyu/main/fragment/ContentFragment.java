@@ -17,11 +17,15 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.RoomInfo;
 import com.ztj.douyu.main.adapter.RoomInfosAdapter;
 import com.ztj.douyu.main.presenter.ContentPresenter;
 import com.ztj.douyu.main.view.onContentView;
+import com.ztj.douyu.utils.ToastObject;
 
 import java.util.List;
 
@@ -98,6 +102,20 @@ public class ContentFragment extends Fragment implements onContentView {
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
+
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                presenter.refreshSubChannelRoomInfos(gameName);
+            }
+        });
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
+            }
+        });
+
     }
 
     @Override
@@ -156,5 +174,45 @@ public class ContentFragment extends Fragment implements onContentView {
 
             }
         });
+    }
+
+    @Override
+    public void onGetLiveRoomInfosRefreshSuccess(final List<RoomInfo> roomInfoList) {
+        final Activity activity = getActivity();
+        if(activity==null)return;
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(adapter!=null){
+                    adapter.setData(roomInfoList);
+                    adapter.notifyDataSetChanged();
+                    smartRefreshLayout.finishRefresh();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onGetLiveRoomInfosRefreshFailed(String message) {
+        final Activity activity = getActivity();
+        if(activity==null)return;
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ToastObject.getInstance().show("刷新失败");
+                smartRefreshLayout.finishRefresh();
+            }
+        });
+
+    }
+
+    @Override
+    public void onGetLiveRoomInfoMoreSuccess(List<RoomInfo> roomInfoList) {
+
+    }
+
+    @Override
+    public void onGetLiveRoomInfoMoreFailed(String message) {
+
     }
 }

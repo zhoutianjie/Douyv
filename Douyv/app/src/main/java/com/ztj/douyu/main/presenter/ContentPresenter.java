@@ -78,4 +78,46 @@ public class ContentPresenter extends BasePresenter<onContentView> {
 
     }
 
+    /**
+     * 刷新
+     * @param gameName
+     */
+    public void refreshSubChannelRoomInfos(String gameName){
+        String url = DouYvUrl.getDouyuSubChannelBaseTag21(gameName);
+        OkhttpUtil.getInstance().getAsyncResponse(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if(isViewAttached()){
+                    getView().onGetLiveRoomInfosRefreshFailed(e.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    ResponseBody body = response.body();
+                    if(body!=null){
+                        String roomInfosJson = body.string();
+                        RoomInfos roomInfos = new Gson().fromJson(roomInfosJson,RoomInfos.class);
+                        List<RoomInfo> result = roomInfos.getData();
+                        if(isViewAttached()){
+                            getView().onGetLiveRoomInfosRefreshSuccess(result);
+                        }
+                    }else{
+                        if(isViewAttached()){
+                            getView().onGetLiveRoomInfosRefreshFailed(response.message());
+                        }
+                    }
+
+                }else{
+                    if(isViewAttached()){
+                        getView().onGetLiveRoomInfosRefreshFailed(response.message());
+                    }
+                }
+
+            }
+        });
+    }
+
 }

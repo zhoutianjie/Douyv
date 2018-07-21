@@ -23,6 +23,9 @@ import com.ztj.douyu.R;
 
 public class App extends Application {
 
+
+    private static Context mContext;
+
     static {
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @NonNull
@@ -46,6 +49,11 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        mContext = this;
         FlowManager.init(this);
+    }
+
+    public static Context getContext(){
+        return mContext;
     }
 }

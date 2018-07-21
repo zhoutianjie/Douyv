@@ -13,4 +13,8 @@ public interface onContentView extends BaseView {
 
     void onGetLiveRoomInfosSuccess(List<RoomInfo> roomInfoList);
     void onGetLiveRoomInfosFailed(String message);
+    void onGetLiveRoomInfosRefreshSuccess(List<RoomInfo> roomInfoList);
+    void onGetLiveRoomInfosRefreshFailed(String message);
+    void onGetLiveRoomInfoMoreSuccess(List<RoomInfo> roomInfoList);
+    void onGetLiveRoomInfoMoreFailed(String message);
 }
