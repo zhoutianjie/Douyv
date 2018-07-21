@@ -39,8 +39,7 @@ public class ContentPresenter extends BasePresenter<onContentView> {
      */
     public void getSubChannelRoomInfos(String gameName){
 //        Log.e("ContentPresenter",gameName);
-        //加载间隔30s以内不重复加载
-       if(true/*System.currentTimeMillis()-lastLodingTime>30*1000*/){
+
            String url = DouYvUrl.getDouyuSubChannelBaseTag21(gameName);
            OkhttpUtil.getInstance().getAsyncResponse(url, new Callback() {
                @Override
@@ -76,8 +75,6 @@ public class ContentPresenter extends BasePresenter<onContentView> {
 
                }
            });
-
-       }
 
     }
 
