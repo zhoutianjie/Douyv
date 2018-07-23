@@ -17,9 +17,6 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
     private String roomId;
     private PlayLivePresenter presenter;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
