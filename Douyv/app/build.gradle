@@ -4,7 +4,7 @@ apply plugin: 'com.android.application'
 def dbflow_version = "3.0.0-beta2"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.ztj.douyu"
         minSdkVersion 15
@@ -41,6 +41,15 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.1'
     implementation 'com.android.support:cardview-v7:28.0.0-alpha3'
     implementation 'com.android.support:design:28.0.0-alpha3'
+
+    //项目
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.8'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.8'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.8.8'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.8'
 }
 
 

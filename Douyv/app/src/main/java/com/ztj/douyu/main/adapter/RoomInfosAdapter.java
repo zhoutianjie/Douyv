@@ -34,7 +34,7 @@ public class RoomInfosAdapter extends RecyclerView.Adapter<RoomInfosAdapter.Room
 
 
     public interface OnItemClickListener{
-        void onClick(int position);
+        void onClick(int position,String roomId);
     }
 
     public RoomInfosAdapter(List<RoomInfo> mData, Context mContext) {
@@ -66,7 +66,7 @@ public class RoomInfosAdapter extends RecyclerView.Adapter<RoomInfosAdapter.Room
 
     @Override
     public void onBindViewHolder(@NonNull RoomInfoViewHolder holder, final int i) {
-        RoomInfo roomInfo = mData.get(i);
+        final RoomInfo roomInfo = mData.get(i);
         if(roomInfo==null)return;
         String roomName = roomInfo.getRoomName();
         if(!StringUtils.isNull(roomName)){
@@ -90,7 +90,7 @@ public class RoomInfosAdapter extends RecyclerView.Adapter<RoomInfosAdapter.Room
             holder.roomLL.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onClick(i);
+                    listener.onClick(i,roomInfo.getRoomId());
                 }
             });
         }

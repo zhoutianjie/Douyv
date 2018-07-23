@@ -22,12 +22,16 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.RoomInfo;
+import com.ztj.douyu.main.activity.PlayLiveUI;
 import com.ztj.douyu.main.adapter.RoomInfosAdapter;
 import com.ztj.douyu.main.presenter.ContentPresenter;
 import com.ztj.douyu.main.view.onContentView;
+import com.ztj.douyu.utils.ActivityUtils;
 import com.ztj.douyu.utils.ToastObject;
 
 import java.util.List;
+
+
 
 import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
 
@@ -51,6 +55,7 @@ public class ContentFragment extends Fragment implements onContentView {
     private RoomInfosAdapter adapter;
     private GridLayoutManager gridLayoutManager;
     private int mOffset = 1;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,6 +129,7 @@ public class ContentFragment extends Fragment implements onContentView {
             }
         });
 
+
     }
 
     @Override
@@ -155,13 +161,21 @@ public class ContentFragment extends Fragment implements onContentView {
 //            Log.e(gameName,roomInfo.toString());
 //        }
 
-        Activity activity = getActivity();
+        final Activity activity = getActivity();
         if(activity==null)return;
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if(adapter==null){
                     adapter = new RoomInfosAdapter(roomInfoList,getContext());
+                    adapter.setOnItemClickListener(new RoomInfosAdapter.OnItemClickListener() {
+                        @Override
+                        public void onClick(int position, String roomId) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("roomId",roomId);
+                            ActivityUtils.openActivity(activity,PlayLiveUI.class,bundle);
+                        }
+                    });
                 }
                 if(gridLayoutManager==null){
                     gridLayoutManager = new GridLayoutManager(getContext(), 2);

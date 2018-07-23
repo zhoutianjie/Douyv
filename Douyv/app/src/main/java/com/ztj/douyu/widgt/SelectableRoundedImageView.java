@@ -30,7 +30,7 @@ import com.ztj.douyu.R;
  */
 
 public class SelectableRoundedImageView extends ImageView {
-
+    
     public static final String TAG = "SelectableRoundedImageView";
 
     private int mResource = 0;
