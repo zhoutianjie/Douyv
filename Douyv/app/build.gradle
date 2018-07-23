@@ -19,6 +19,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets.main {
+        jniLibs.srcDirs = ['src/main/jniLibs']
+    }
+
+    lintOptions {
+        abortOnError false
+    }
 
 }
 
@@ -39,17 +46,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.1'
-    implementation 'com.android.support:cardview-v7:28.0.0-alpha3'
-    implementation 'com.android.support:design:28.0.0-alpha3'
-
-    //项目
-//    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
-//    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
-//    implementation 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.8'
-//    implementation 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'
-//    implementation 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.8'
-//    implementation 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.8.8'
-//    implementation 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.8'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation project(':ijkplayer-java')
 }
 
 
