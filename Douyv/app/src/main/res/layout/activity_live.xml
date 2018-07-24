@@ -3,10 +3,37 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <com.ztj.douyu.widgt.media.IjkVideoView
-        android:id="@+id/ijkplayView"
+    <RelativeLayout
+        android:id="@+id/play_rl"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="200dp">
+
+        <com.ztj.douyu.widgt.media.IjkVideoView
+            android:id="@+id/ijkplayView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+        <ImageView
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginLeft="@dimen/dimen_5"
+            android:id="@+id/back_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/abc_ic_commit_search_api_mtrl_alpha"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/full_screen_iv"
+            android:layout_marginRight="@dimen/dimen_5"
+            android:layout_marginBottom="@dimen/dimen_5"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/full_screen_icon"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
 
 </RelativeLayout>
