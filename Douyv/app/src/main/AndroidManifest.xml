@@ -9,9 +9,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- setting写入时需要权限 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:name=".main.App"
@@ -28,8 +28,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".main.activity.PlayLiveUI"
-            android:theme="@style/Theme.Design.Light.NoActionBar"></activity>
+        <activity
+            android:name=".main.activity.PlayLiveUI"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+
+        <!--enabled 指示这个service能否被实例化-->
+        <!--exported 其他应用程序的组件能否被调用-->
+        <service
+            android:name=".main.service.FloatWindowService"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>

@@ -21,9 +21,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ztj.douyu.R;
+import com.ztj.douyu.main.App;
 import com.ztj.douyu.main.presenter.PlayLivePresenter;
+import com.ztj.douyu.main.service.FloatWindowService;
 import com.ztj.douyu.main.view.onPlayLiveView;
+import com.ztj.douyu.utils.ActivityUtils;
 import com.ztj.douyu.utils.StringUtils;
+import com.ztj.douyu.widgt.FloatWindow;
 import com.ztj.douyu.widgt.media.IjkVideoView;
 
 import java.lang.ref.WeakReference;
@@ -45,6 +49,7 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
     private RelativeLayout mPlayRl;
     private boolean isViewsShow;
     private ControlHandler mHandler;
+    private boolean isSupportFloatWindow = true;
 
 
     @Override
@@ -94,6 +99,7 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
         mBackImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startFloatWindowService();
                 finish();
             }
         });
@@ -211,6 +217,22 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
             message.what = HIDE_VIEWS_MSG;
             mHandler.sendMessageDelayed(message,3000);
         }
+    }
+
+
+    private void startFloatWindowService(){
+
+        //是否开启支持悬浮窗,展示默认支持
+        isSupportFloatWindow = true;
+        if(!isSupportFloatWindow)return;
+        //是否开启悬浮窗权限
+        if(!ActivityUtils.hasPermissionFloatWin(App.getContext()))return;
+
+        Intent intent = new Intent(PlayLiveUI.this,FloatWindowService.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("url","");
+        intent.putExtra(FloatWindowService.ACTION_PLAY,bundle);
+        startService(intent);
     }
 
      static class ControlHandler extends Handler{
