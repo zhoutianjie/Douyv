@@ -5,13 +5,17 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -46,6 +50,7 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_live);
 
         initExtras();
@@ -53,7 +58,6 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
         initView();
         register();
     }
-
 
 
     private void initExtras() {
@@ -72,6 +76,7 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
     }
 
     private void initView() {
+
         mVideoView = findViewById(R.id.ijkplayView);
         mPlayRl = findViewById(R.id.play_rl);
         IjkMediaPlayer.loadLibrariesOnce(null);
@@ -96,7 +101,11 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
         mFullScreenImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(getRequestedOrientation()!= ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                }else{
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                }
             }
         });
 
@@ -108,6 +117,7 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
                 return true;
             }
         });
+
     }
 
 
@@ -183,6 +193,11 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
         set.setDuration(1000).start();
         mBackImg.setVisibility(View.VISIBLE);
         mFullScreenImg.setVisibility(View.VISIBLE);
+        if(getRequestedOrientation()!= ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE){
+            mFullScreenImg.setImageResource(R.mipmap.ic_fullscreen_white_24dp);
+        }else{
+            mFullScreenImg.setImageResource(R.mipmap.ic_fullscreen_exit_white_24dp);
+        }
 //        mBackImg.startAnimation(AnimationUtils.loadAnimation(this,R.anim.alpha_show));
 //        mBackImg.setVisibility(View.VISIBLE);
 //        mFullScreenImg.startAnimation(AnimationUtils.loadAnimation(this,R.anim.alpha_show));
