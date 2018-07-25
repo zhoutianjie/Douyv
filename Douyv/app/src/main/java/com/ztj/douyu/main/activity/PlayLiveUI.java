@@ -1,5 +1,7 @@
 package com.ztj.douyu.main.activity;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -151,22 +153,40 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
     //隐藏相关布局
     public void hideViews(){
 
-
         isViewsShow = false;
-        mBackImg.startAnimation(AnimationUtils.loadAnimation(this,R.anim.alpha_hide));
-        mBackImg.setVisibility(View.VISIBLE);
-        mFullScreenImg.startAnimation(AnimationUtils.loadAnimation(this,R.anim.alpha_hide));
-        mFullScreenImg.setVisibility(View.VISIBLE);
+
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+                ObjectAnimator.ofFloat(mBackImg,"alpha",1f,0f),
+                ObjectAnimator.ofFloat(mFullScreenImg,"alpha",1f,0f)
+        );
+        set.setDuration(1000).start();
+        mBackImg.setVisibility(View.GONE);
+        mFullScreenImg.setVisibility(View.GONE);
+
+//        mBackImg.startAnimation(AnimationUtils.loadAnimation(this,R.anim.alpha_hide));
+//        mBackImg.setVisibility(View.GONE);
+//        mFullScreenImg.startAnimation(AnimationUtils.loadAnimation(this,R.anim.alpha_hide));
+//        mFullScreenImg.setVisibility(View.GONE);
     }
 
     //显示相关布局
     public void showViews(){
 
         isViewsShow = true;
-        mBackImg.startAnimation(AnimationUtils.loadAnimation(this,R.anim.alpha_show));
-        mBackImg.setVisibility(View.GONE);
-        mFullScreenImg.startAnimation(AnimationUtils.loadAnimation(this,R.anim.alpha_show));
-        mFullScreenImg.setVisibility(View.GONE);
+
+        AnimatorSet set = new AnimatorSet();
+        set.playTogether(
+                ObjectAnimator.ofFloat(mBackImg,"alpha",0f,1f),
+                ObjectAnimator.ofFloat(mFullScreenImg,"alpha",0f,1f)
+        );
+        set.setDuration(1000).start();
+        mBackImg.setVisibility(View.VISIBLE);
+        mFullScreenImg.setVisibility(View.VISIBLE);
+//        mBackImg.startAnimation(AnimationUtils.loadAnimation(this,R.anim.alpha_show));
+//        mBackImg.setVisibility(View.VISIBLE);
+//        mFullScreenImg.startAnimation(AnimationUtils.loadAnimation(this,R.anim.alpha_show));
+//        mFullScreenImg.setVisibility(View.VISIBLE);
     }
 
     private void startAutoHide(){
