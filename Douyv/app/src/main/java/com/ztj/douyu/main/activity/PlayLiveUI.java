@@ -50,6 +50,7 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
     private boolean isViewsShow;
     private ControlHandler mHandler;
     private boolean isSupportFloatWindow = true;
+    private boolean isBackPressed = false;
 
 
     @Override
@@ -134,9 +135,27 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
     }
 
     @Override
+    public void onBackPressed() {
+        isBackPressed = true;
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(isBackPressed || !mVideoView.isBackgroundPlayEnabled()){
+            mVideoView.stopPlayback();
+            mVideoView.release(true);
+            mVideoView.stopBackgroundPlay();
+        }else{
+            mVideoView.enterBackground();
+        }
+        IjkMediaPlayer.native_profileEnd();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        IjkMediaPlayer.native_profileEnd();
         presenter.detachView();
         mHandler.removeCallbacksAndMessages(null);
     }
