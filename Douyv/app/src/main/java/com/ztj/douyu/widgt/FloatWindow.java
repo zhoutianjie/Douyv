@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import com.ztj.douyu.R;
 import com.ztj.douyu.utils.ScreenUtils;
@@ -34,10 +36,13 @@ public class FloatWindow {
         Log.e("FloatWindow","createFloatView");
         wmParams = new WindowManager.LayoutParams();
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-        wmParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
+        //TYPE_SYSTEM_OVERLAY 出现无法点击响应的情况
+        //wmParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
+//        wmParams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
+        wmParams.type = WindowManager.LayoutParams.TYPE_PHONE;
         wmParams.format = PixelFormat.RGBA_8888;
         //悬浮窗自己处理点击事件
-        wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL|WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
 
         wmParams.gravity = Gravity.RIGHT|Gravity.CENTER_VERTICAL;
 
@@ -49,6 +54,7 @@ public class FloatWindow {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         mFloatLayout = inflater.inflate(R.layout.window_play,null);
         mWindowManager.addView(mFloatLayout,wmParams);
+
 
         //设置点击事件相关
         ImageButton imageButton = mFloatLayout.findViewById(R.id.play_close);
@@ -75,7 +81,6 @@ public class FloatWindow {
     public void detory(){
         Log.e("FloatWindow","detory");
         //关闭ijkplayer
-
         if(mFloatLayout!=null){
             mWindowManager.removeView(mFloatLayout);
         }
