@@ -1,6 +1,7 @@
 package com.ztj.douyu.main.activity;
 
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTabHost;
 
 import android.support.v7.app.AppCompatActivity;
@@ -62,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
         return view;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onDestroy() {

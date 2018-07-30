@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <com.ztj.douyu.widgt.media.IjkVideoView
-        android:id="@+id/ijkplay_window"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <!--<com.ztj.douyu.widgt.media.IjkVideoView-->
+        <!--android:id="@+id/ijkplay_window"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
 
     <ImageButton
         android:layout_marginRight="@dimen/dimen_5"

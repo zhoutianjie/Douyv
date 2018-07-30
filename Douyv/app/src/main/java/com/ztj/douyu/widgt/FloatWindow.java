@@ -6,11 +6,14 @@ import android.graphics.PixelFormat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import com.ztj.douyu.R;
+import com.ztj.douyu.main.activity.MainActivity;
 import com.ztj.douyu.utils.SystemUtils;
 
 /**
@@ -24,6 +27,18 @@ public class FloatWindow {
     private WindowManager.LayoutParams wmParams;
     private WindowManager mWindowManager;
     private View mFloatLayout;
+
+    private int mTouchStartX;
+    private int mTouchStartY;
+
+    private int mTouchCurrentX;
+    private int mTouchCurrentY;
+
+    private int mStartX;
+    private int mStartY;
+
+    private int mStopX;
+    private int mStopY;
 
     public FloatWindow(Service mHostService) {
         this.mHostService = mHostService;
@@ -42,17 +57,55 @@ public class FloatWindow {
         //悬浮窗自己处理点击事件
         wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
 
-        wmParams.gravity = Gravity.RIGHT|Gravity.CENTER_VERTICAL;
+        //为什么设置Gravity.END 以后水平方向就不能滑动悬浮框?
+        wmParams.gravity = Gravity.CENTER_VERTICAL|Gravity.START;
 
         int[] size = SystemUtils.getScreenSize();
 
         wmParams.width = size[0]/3;
-        wmParams.height = (wmParams.width/4)*3;
+        wmParams.height = size[0]/9*2;
+
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         mFloatLayout = inflater.inflate(R.layout.window_play,null);
         mWindowManager.addView(mFloatLayout,wmParams);
 
+        mFloatLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        mTouchStartX = (int) event.getRawX();
+                        mTouchStartY = (int) event.getRawY();
+
+                        mStartX = (int) event.getX();
+                        mStartY = (int) event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        mTouchCurrentX = (int) event.getRawX();
+                        mTouchCurrentY = (int) event.getRawY();
+                        wmParams.x+= mTouchCurrentX-mTouchStartX;
+                        wmParams.y+= mTouchCurrentY-mTouchStartY;
+
+                        mWindowManager.updateViewLayout(mFloatLayout,wmParams);
+
+                        mTouchStartX = mTouchCurrentX;
+                        mTouchStartY = mTouchCurrentY;
+
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        mStopX = (int) event.getX();
+                        mStopY = (int) event.getY();
+                        int mTouchSlop = ViewConfiguration.get(mContext).getScaledTouchSlop();
+                        if(Math.abs(mStartX-mStopX)>mTouchSlop || Math.abs(mStartY-mStopY)>mTouchSlop){
+                            return true;
+                        }
+                        break;
+                }
+
+                return false;
+            }
+        });
 
         //设置点击事件相关
         ImageButton imageButton = mFloatLayout.findViewById(R.id.play_close);
