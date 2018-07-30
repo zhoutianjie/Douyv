@@ -99,7 +99,11 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                setResult(RequestAndResultCode.PLAYLIVE_RESULT);
+                Bundle bundle = new Bundle();
+                bundle.putString("play_url",mPlayUrl);
+                bundle.putString("play_roomId",roomId);
+                intent.putExtras(bundle);
+                setResult(RequestAndResultCode.PLAYLIVE_RESULT,intent);
                 finish();
             }
         });
@@ -162,7 +166,7 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
     @Override
     public void onGetLiveRoomUrlInfo(final String liveUrl) {
         if(StringUtils.isNull(liveUrl))return;
-
+        mPlayUrl = liveUrl;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

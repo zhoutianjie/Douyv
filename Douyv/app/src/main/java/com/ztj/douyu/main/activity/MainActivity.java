@@ -25,6 +25,7 @@ import com.ztj.douyu.main.fragment.HomeFragment;
 import com.ztj.douyu.main.fragment.MineFragment;
 import com.ztj.douyu.main.service.FloatWindowService;
 import com.ztj.douyu.utils.ActivityUtils;
+import com.ztj.douyu.utils.StringUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -79,7 +80,16 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==RESULT_CANCELED)return;
         if(resultCode == RequestAndResultCode.PLAYLIVE_RESULT){
-            startFloatWindowService();
+           Bundle bundle = data.getExtras();
+           String url = bundle.getString("play_url");
+           if(!StringUtils.isNull(url)){
+               startFloatWindowService(url);
+           }else{
+               String roomId = bundle.getString("play_roomId");
+               if(StringUtils.isNull(roomId))return;
+               //请求播放地址
+           }
+
         }
     }
 
@@ -89,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    private void startFloatWindowService(){
-
+    private void startFloatWindowService(String url){
+        Log.e("TAG","startFloatWindowService "+url);
         if(!isSupportFloatWindow)return;
         if(!ActivityUtils.hasPermissionFloatWin(App.getContext()))return;
         Intent intent = new Intent(MainActivity.this,FloatWindowService.class);
