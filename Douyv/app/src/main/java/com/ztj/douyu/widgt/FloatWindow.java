@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -55,7 +56,7 @@ public class FloatWindow {
         wmParams.type = WindowManager.LayoutParams.TYPE_PHONE;
         wmParams.format = PixelFormat.RGBA_8888;
         //悬浮窗自己处理点击事件
-        wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+        wmParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL|WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 
         //为什么设置Gravity.END 以后水平方向就不能滑动悬浮框?
         wmParams.gravity = Gravity.CENTER_VERTICAL|Gravity.START;
@@ -107,15 +108,21 @@ public class FloatWindow {
             }
         });
 
-        //设置点击事件相关
-        ImageButton imageButton = mFloatLayout.findViewById(R.id.play_close);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        mFloatLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("FloatWindow","onClick");
-                mHostService.stopSelf();
+                //取消小窗口播放，跳转到PlayUI界面
             }
         });
+
+       mFloatLayout.setOnLongClickListener(new View.OnLongClickListener() {
+           @Override
+           public boolean onLongClick(View v) {
+               mHostService.stopSelf();
+               return false;
+           }
+       });
+        
 
     }
 

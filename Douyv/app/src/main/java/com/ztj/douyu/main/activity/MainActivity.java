@@ -1,11 +1,15 @@
 package com.ztj.douyu.main.activity;
 
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTabHost;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,13 +17,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ztj.douyu.R;
+import com.ztj.douyu.bean.constant.RequestAndResultCode;
+import com.ztj.douyu.main.App;
 import com.ztj.douyu.main.fragment.ClassifyFragment;
 import com.ztj.douyu.main.fragment.FavourFragment;
 import com.ztj.douyu.main.fragment.HomeFragment;
 import com.ztj.douyu.main.fragment.MineFragment;
+import com.ztj.douyu.main.service.FloatWindowService;
+import com.ztj.douyu.utils.ActivityUtils;
 
 public class MainActivity extends AppCompatActivity {
 
+    private boolean isStartFloatWindowService = false;
+    //是否支持小窗口播放
+    private boolean isSupportFloatWindow = true;
     private FragmentTabHost mTabHost;
     private final String mTabSpec[] = {"head", "classify", "heart", "search"};
 
@@ -66,11 +77,36 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==RESULT_CANCELED)return;
+        if(resultCode == RequestAndResultCode.PLAYLIVE_RESULT){
+            startFloatWindowService();
+        }
     }
 
     @Override
     protected void onDestroy() {
+        stopService();
         super.onDestroy();
-
     }
+
+    private void startFloatWindowService(){
+
+        if(!isSupportFloatWindow)return;
+        if(!ActivityUtils.hasPermissionFloatWin(App.getContext()))return;
+        Intent intent = new Intent(MainActivity.this,FloatWindowService.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("url","");
+        intent.putExtra(FloatWindowService.ACTION_PLAY,bundle);
+        startService(intent);
+        isStartFloatWindowService = true;
+    }
+
+    private void stopService(){
+        if(isStartFloatWindowService){
+            Intent intent = new Intent(MainActivity.this,FloatWindowService.class);
+            stopService(intent);
+        }
+    }
+
+
 }

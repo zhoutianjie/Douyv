@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ztj.douyu.R;
+import com.ztj.douyu.bean.constant.RequestAndResultCode;
 import com.ztj.douyu.main.App;
 import com.ztj.douyu.main.presenter.PlayLivePresenter;
 import com.ztj.douyu.main.service.FloatWindowService;
@@ -49,8 +50,8 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
     private RelativeLayout mPlayRl;
     private boolean isViewsShow;
     private ControlHandler mHandler;
-    private boolean isSupportFloatWindow = true;
     private boolean isBackPressed = false;
+    private String mPlayUrl;
 
 
     @Override
@@ -90,9 +91,6 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
 
         mBackImg = findViewById(R.id.back_iv);
         mFullScreenImg = findViewById(R.id.full_screen_iv);
-//        showViews();
-//        startAutoHide();
-
     }
 
     private void register() {
@@ -100,7 +98,8 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
         mBackImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFloatWindowService();
+                Intent intent = new Intent();
+                setResult(RequestAndResultCode.PLAYLIVE_RESULT);
                 finish();
             }
         });
@@ -195,7 +194,7 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
                 ObjectAnimator.ofFloat(mBackImg,"alpha",1f,0f),
                 ObjectAnimator.ofFloat(mFullScreenImg,"alpha",1f,0f)
         );
-        set.setDuration(1000).start();
+        set.setDuration(500).start();
         mBackImg.setVisibility(View.GONE);
         mFullScreenImg.setVisibility(View.GONE);
 
@@ -238,21 +237,6 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
         }
     }
 
-
-    private void startFloatWindowService(){
-
-        //是否开启支持悬浮窗,展示默认支持
-        isSupportFloatWindow = true;
-        if(!isSupportFloatWindow)return;
-        //是否开启悬浮窗权限
-        if(!ActivityUtils.hasPermissionFloatWin(App.getContext()))return;
-
-        Intent intent = new Intent(PlayLiveUI.this,FloatWindowService.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("url","");
-        intent.putExtra(FloatWindowService.ACTION_PLAY,bundle);
-        startService(intent);
-    }
 
      static class ControlHandler extends Handler{
         private WeakReference<PlayLiveUI> weakReference;

@@ -22,6 +22,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.RoomInfo;
+import com.ztj.douyu.bean.constant.RequestAndResultCode;
 import com.ztj.douyu.main.activity.PlayLiveUI;
 import com.ztj.douyu.main.adapter.RoomInfosAdapter;
 import com.ztj.douyu.main.presenter.ContentPresenter;
@@ -173,7 +174,7 @@ public class ContentFragment extends Fragment implements onContentView {
                         public void onClick(int position, String roomId) {
                             Bundle bundle = new Bundle();
                             bundle.putString("roomId",roomId);
-                            ActivityUtils.openActivity(activity,PlayLiveUI.class,bundle);
+                            ActivityUtils.openActivity(activity,PlayLiveUI.class,bundle, RequestAndResultCode.PLAYLIVE_REQUEST);
                         }
                     });
                 }

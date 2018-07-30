@@ -18,13 +18,22 @@ import java.lang.reflect.Method;
 
 public class ActivityUtils {
 
+
     public static void openActivity(Activity activity, Class<?> pClass, Bundle pBundle){
+        openActivity(activity,pClass,pBundle,-1);
+    }
+
+    public static void openActivity(Activity activity, Class<?> pClass, Bundle pBundle,int requestCode){
         if(activity == null) return;
         Intent intent = new Intent(activity,pClass);
         if(pBundle!=null){
             intent.putExtras(pBundle);
         }
-        activity.startActivity(intent);
+        if(requestCode<0){
+            activity.startActivity(intent);
+        }else{
+            activity.startActivityForResult(intent,requestCode);
+        }
     }
 
     public static boolean hasPermissionFloatWin(Context context){
