@@ -122,12 +122,12 @@ public class FloatWindow {
                return false;
            }
        });
-        
+
 
     }
 
     //播放相关
-    public void play(){
+    public void play(String url){
 
     }
 

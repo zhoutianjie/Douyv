@@ -42,8 +42,9 @@ public class FloatWindowService extends Service {
         }else{
             Bundle bundle = intent.getBundleExtra(ACTION_PLAY);
             if(bundle!=null && mFloatWindow!=null){
-                Log.e("FloatService","onStartCommand play");
-                mFloatWindow.play();
+                String url = bundle.getString("url");
+                Log.e("FloatService",url);
+                mFloatWindow.play(url);
             }
         }
         return START_STICKY;

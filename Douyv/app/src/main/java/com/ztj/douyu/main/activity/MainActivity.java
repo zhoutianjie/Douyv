@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         if(!ActivityUtils.hasPermissionFloatWin(App.getContext()))return;
         Intent intent = new Intent(MainActivity.this,FloatWindowService.class);
         Bundle bundle = new Bundle();
-        bundle.putString("url","");
+        bundle.putString("url",url);
         intent.putExtra(FloatWindowService.ACTION_PLAY,bundle);
         startService(intent);
         isStartFloatWindowService = true;
