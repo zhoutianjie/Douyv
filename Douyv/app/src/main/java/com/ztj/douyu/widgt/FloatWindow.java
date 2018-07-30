@@ -7,13 +7,11 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 
 import com.ztj.douyu.R;
-import com.ztj.douyu.utils.ScreenUtils;
+import com.ztj.douyu.utils.SystemUtils;
 
 /**
  * Created by zhoutianjie on 2018/7/25.
@@ -46,7 +44,7 @@ public class FloatWindow {
 
         wmParams.gravity = Gravity.RIGHT|Gravity.CENTER_VERTICAL;
 
-        int[] size = ScreenUtils.getScreenSize();
+        int[] size = SystemUtils.getScreenSize();
 
         wmParams.width = size[0]/3;
         wmParams.height = (wmParams.width/4)*3;

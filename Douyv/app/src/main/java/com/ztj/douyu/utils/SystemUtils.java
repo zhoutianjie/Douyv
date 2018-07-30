@@ -2,6 +2,7 @@ package com.ztj.douyu.utils;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.WindowManager;
 
 import com.ztj.douyu.main.App;
@@ -10,7 +11,7 @@ import com.ztj.douyu.main.App;
  * Created by zhoutianjie on 2018/7/25.
  */
 
-public class ScreenUtils {
+public class SystemUtils {
 
     public static int[] getScreenSize(){
         WindowManager windowManager = (WindowManager) App.getContext().getSystemService(Context.WINDOW_SERVICE);
@@ -24,8 +25,8 @@ public class ScreenUtils {
         int screenHeight = (int) (height/density);//屏幕高度 dp
 
         int[] size = new int[2];
-        size[0] = screenWidth;
-        size[1] = screenHeight;
+        size[0] = width;
+        size[1] = height;
 
         return size;
     }
