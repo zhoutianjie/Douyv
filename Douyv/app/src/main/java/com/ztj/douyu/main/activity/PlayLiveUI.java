@@ -61,8 +61,8 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
         setContentView(R.layout.activity_live);
 
         initExtras();
-        initComponet();
         initView();
+        initComponet();
         register();
     }
 
@@ -72,6 +72,7 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
         Bundle bundle = intent.getExtras();
         if(bundle!=null){
             roomId = bundle.getString("roomId");
+            mPlayUrl = bundle.getString("play_url");
         }
     }
 
@@ -79,7 +80,17 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
         mHandler = new ControlHandler(this);
         presenter = new PlayLivePresenter();
         presenter.attachView(this);
-        presenter.getLiveRoomUrl(roomId);
+        if(!StringUtils.isNull(roomId)){
+            presenter.getLiveRoomUrl(roomId);
+        }else if(!StringUtils.isNull(mPlayUrl)){
+            mVideoView.setVideoURI(Uri.parse(mPlayUrl));
+            mVideoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(IMediaPlayer mp) {
+                    mVideoView.start();
+                }
+            });
+        }
     }
 
     private void initView() {
@@ -101,7 +112,6 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
                 Intent intent = new Intent();
                 Bundle bundle = new Bundle();
                 bundle.putString("play_url",mPlayUrl);
-                bundle.putString("play_roomId",roomId);
                 intent.putExtras(bundle);
                 setResult(RequestAndResultCode.PLAYLIVE_RESULT,intent);
                 finish();

@@ -83,11 +83,8 @@ public class MainActivity extends AppCompatActivity {
            Bundle bundle = data.getExtras();
            String url = bundle.getString("play_url");
            if(!StringUtils.isNull(url)){
+               //url 为空则不显示小窗口
                startFloatWindowService(url);
-           }else{
-               String roomId = bundle.getString("play_roomId");
-               if(StringUtils.isNull(roomId))return;
-               //请求播放地址
            }
 
         }

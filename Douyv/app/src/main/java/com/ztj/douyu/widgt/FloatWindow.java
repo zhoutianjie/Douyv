@@ -2,7 +2,10 @@ package com.ztj.douyu.widgt;
 
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
@@ -14,8 +17,15 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import com.ztj.douyu.R;
+import com.ztj.douyu.bean.constant.RequestAndResultCode;
 import com.ztj.douyu.main.activity.MainActivity;
+import com.ztj.douyu.main.activity.PlayLiveUI;
+import com.ztj.douyu.utils.ActivityUtils;
 import com.ztj.douyu.utils.SystemUtils;
+import com.ztj.douyu.widgt.media.IjkVideoView;
+
+import tv.danmaku.ijk.media.player.IMediaPlayer;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
  * Created by zhoutianjie on 2018/7/25.
@@ -28,6 +38,9 @@ public class FloatWindow {
     private WindowManager.LayoutParams wmParams;
     private WindowManager mWindowManager;
     private View mFloatLayout;
+    private IjkVideoView  mVideoView;
+
+    private String mPlayUrl;
 
     private int mTouchStartX;
     private int mTouchStartY;
@@ -63,12 +76,13 @@ public class FloatWindow {
 
         int[] size = SystemUtils.getScreenSize();
 
-        wmParams.width = size[0]/3;
-        wmParams.height = size[0]/9*2;
+        wmParams.width = size[0]/2;
+        wmParams.height = size[0]/3;
 
 
-        LayoutInflater inflater = LayoutInflater.from(mContext);
+        final LayoutInflater inflater = LayoutInflater.from(mContext);
         mFloatLayout = inflater.inflate(R.layout.window_play,null);
+        mVideoView = mFloatLayout.findViewById(R.id.ijkplay_window);
         mWindowManager.addView(mFloatLayout,wmParams);
 
         mFloatLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -112,6 +126,13 @@ public class FloatWindow {
             @Override
             public void onClick(View v) {
                 //取消小窗口播放，跳转到PlayUI界面
+                detory();
+                Bundle bundle = new Bundle();
+                bundle.putString("play_url",mPlayUrl);
+                Intent intent = new Intent(mContext,PlayLiveUI.class);
+                intent.putExtras(bundle);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
             }
         });
 
@@ -128,6 +149,17 @@ public class FloatWindow {
 
     //播放相关
     public void play(String url){
+        mPlayUrl = url;
+        IjkMediaPlayer.loadLibrariesOnce(null);
+        IjkMediaPlayer.native_profileBegin("libijkplayer.so");
+        mVideoView.setVideoURI(Uri.parse(url));
+        mVideoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(IMediaPlayer mp) {
+                Log.e("FloatWindow","mVideoView Start");
+                mVideoView.start();
+            }
+        });
 
     }
 
@@ -139,6 +171,11 @@ public class FloatWindow {
     public void detory(){
         Log.e("FloatWindow","detory");
         //关闭ijkplayer
+        mVideoView.stopPlayback();
+        mVideoView.release(true);
+        mVideoView.stopBackgroundPlay();
+        IjkMediaPlayer.native_profileEnd();
+
         if(mFloatLayout!=null){
             mWindowManager.removeView(mFloatLayout);
         }
