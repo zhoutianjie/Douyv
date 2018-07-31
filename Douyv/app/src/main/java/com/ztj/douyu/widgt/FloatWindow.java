@@ -136,13 +136,14 @@ public class FloatWindow {
             }
         });
 
-       mFloatLayout.setOnLongClickListener(new View.OnLongClickListener() {
-           @Override
-           public boolean onLongClick(View v) {
-               mHostService.stopSelf();
-               return false;
-           }
-       });
+        //长按停止服务有可能导致滑动时销毁窗口，这里先注掉后面想实现机制
+//       mFloatLayout.setOnLongClickListener(new View.OnLongClickListener() {
+//           @Override
+//           public boolean onLongClick(View v) {
+//               mHostService.stopSelf();
+//               return false;
+//           }
+//       });
 
 
     }
@@ -152,12 +153,28 @@ public class FloatWindow {
         mPlayUrl = url;
         IjkMediaPlayer.loadLibrariesOnce(null);
         IjkMediaPlayer.native_profileBegin("libijkplayer.so");
+//        mVideoView.setRender(IjkVideoView.RENDER_TEXTURE_VIEW);
         mVideoView.setVideoURI(Uri.parse(url));
         mVideoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(IMediaPlayer mp) {
                 Log.e("FloatWindow","mVideoView Start");
                 mVideoView.start();
+            }
+        });
+
+        mVideoView.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
+            @Override
+            public boolean onInfo(IMediaPlayer mp, int what, int extra) {
+                Log.e("onInfo",""+what);
+                return false;
+            }
+        });
+        mVideoView.setOnErrorListener(new IMediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(IMediaPlayer mp, int what, int extra) {
+                Log.e("onError",""+what);
+                return false;
             }
         });
 

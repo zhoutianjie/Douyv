@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.media.PlaybackParams;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
@@ -181,6 +182,7 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
             @Override
             public void run() {
                 //初始化播放器
+//                mVideoView.setRender(IjkVideoView.RENDER_TEXTURE_VIEW);
                 mVideoView.setVideoURI(Uri.parse(liveUrl));
                 mVideoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
                     @Override
@@ -188,6 +190,21 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
                         mVideoView.start();
                     }
                 });
+                mVideoView.setOnInfoListener(new IMediaPlayer.OnInfoListener() {
+                    @Override
+                    public boolean onInfo(IMediaPlayer mp, int what, int extra) {
+                        Log.e("onInfo",""+what);
+                        return false;
+                    }
+                });
+                mVideoView.setOnErrorListener(new IMediaPlayer.OnErrorListener() {
+                    @Override
+                    public boolean onError(IMediaPlayer mp, int what, int extra) {
+                        Log.e("onError",""+what);
+                        return false;
+                    }
+                });
+
             }
         });
     }
