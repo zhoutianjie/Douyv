@@ -1,15 +1,13 @@
 package com.ztj.douyu.main.activity;
 
 
-import android.app.Dialog;
+
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTabHost;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,7 +27,7 @@ import com.ztj.douyu.utils.StringUtils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private boolean isStartFloatWindowService = false;
+
     //是否支持小窗口播放
     private boolean isSupportFloatWindow = true;
     private FragmentTabHost mTabHost;
@@ -105,11 +103,10 @@ public class MainActivity extends AppCompatActivity {
         bundle.putString("url",url);
         intent.putExtra(FloatWindowService.ACTION_PLAY,bundle);
         startService(intent);
-        isStartFloatWindowService = true;
     }
 
     private void stopService(){
-        if(isStartFloatWindowService){
+        if(FloatWindowService.mIsFloatWindowShown){
             Intent intent = new Intent(MainActivity.this,FloatWindowService.class);
             stopService(intent);
         }

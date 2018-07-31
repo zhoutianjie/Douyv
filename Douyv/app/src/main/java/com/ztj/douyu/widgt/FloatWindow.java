@@ -126,13 +126,13 @@ public class FloatWindow {
             @Override
             public void onClick(View v) {
                 //取消小窗口播放，跳转到PlayUI界面
-                detory();
                 Bundle bundle = new Bundle();
                 bundle.putString("play_url",mPlayUrl);
                 Intent intent = new Intent(mContext,PlayLiveUI.class);
                 intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
+                mHostService.stopSelf();
             }
         });
 
