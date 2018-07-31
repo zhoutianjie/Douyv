@@ -37,7 +37,8 @@ public class FloatWindow {
     private Context mContext;
     private WindowManager.LayoutParams wmParams;
     private WindowManager mWindowManager;
-    private View mFloatLayout;
+//    private View mFloatLayout;
+    private FloatWindowView mFloatLayout;
     private IjkVideoView  mVideoView;
 
     private String mPlayUrl;
@@ -80,9 +81,12 @@ public class FloatWindow {
         wmParams.height = size[0]/3;
 
 
-        final LayoutInflater inflater = LayoutInflater.from(mContext);
-        mFloatLayout = inflater.inflate(R.layout.window_play,null);
-        mVideoView = mFloatLayout.findViewById(R.id.ijkplay_window);
+//        final LayoutInflater inflater = LayoutInflater.from(mContext);
+//        mFloatLayout = inflater.inflate(R.layout.window_play,null);
+//        mVideoView = mFloatLayout.findViewById(R.id.ijkplay_window);
+        mFloatLayout = new FloatWindowView(mContext);
+        mVideoView = mFloatLayout.getmIjkVideoView();
+
         mWindowManager.addView(mFloatLayout,wmParams);
 
         mFloatLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -136,14 +140,13 @@ public class FloatWindow {
             }
         });
 
-        //长按停止服务有可能导致滑动时销毁窗口，这里先注掉后面想实现机制
-//       mFloatLayout.setOnLongClickListener(new View.OnLongClickListener() {
-//           @Override
-//           public boolean onLongClick(View v) {
-//               mHostService.stopSelf();
-//               return false;
-//           }
-//       });
+
+        mFloatLayout.setDoubleClickListener(new FloatWindowView.OnDoubleClickListener() {
+            @Override
+            public void OnDoubleClick() {
+                mHostService.stopSelf();
+            }
+        });
 
 
     }
