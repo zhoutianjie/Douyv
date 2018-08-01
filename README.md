@@ -29,6 +29,7 @@
 数据库相关DBFlow  
 刷新相关 SmartRefreshLayout(这个控件后期我会自己实现一下)  
 播放器 ijkplayer  
+事件总线 EventBus  
 
 ### 目前的不足  
 播放器的分辨率还存在问题，特别是播放竖屏的直播源，比如颜值区的视频源  
