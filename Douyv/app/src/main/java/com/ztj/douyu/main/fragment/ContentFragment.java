@@ -1,7 +1,6 @@
 package com.ztj.douyu.main.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +20,16 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.RoomInfo;
-import com.ztj.douyu.bean.constant.RequestAndResultCode;
+import com.ztj.douyu.bean.constant.DouYvUrl;
 import com.ztj.douyu.main.activity.MainActivity;
-import com.ztj.douyu.main.activity.PlayLiveUI;
+import com.ztj.douyu.main.activity.HorizontalPlayLiveUI;
+import com.ztj.douyu.main.activity.VerticalPlayLiveUI;
 import com.ztj.douyu.main.adapter.RoomInfosAdapter;
 import com.ztj.douyu.main.presenter.ContentPresenter;
 import com.ztj.douyu.main.service.FloatWindowService;
 import com.ztj.douyu.main.view.onContentView;
 import com.ztj.douyu.utils.ActivityUtils;
 import com.ztj.douyu.utils.ToastObject;
-import com.ztj.douyu.widgt.FloatWindow;
 
 import java.util.List;
 
@@ -174,13 +172,18 @@ public class ContentFragment extends Fragment implements onContentView {
                     adapter = new RoomInfosAdapter(roomInfoList,getContext());
                     adapter.setOnItemClickListener(new RoomInfosAdapter.OnItemClickListener() {
                         @Override
-                        public void onClick(int position, String roomId) {
+                        public void onClick(int position, String roomId,int isVertical) {
                             if(FloatWindowService.mIsFloatWindowShown){
                                 ((MainActivity)activity).stopFloatWindowService();
                             }
                             Bundle bundle = new Bundle();
                             bundle.putString("roomId",roomId);
-                            ActivityUtils.openActivity(activity,PlayLiveUI.class,bundle);
+                            if(isVertical== DouYvUrl.horizontal_screen_play){
+                                ActivityUtils.openActivity(activity,HorizontalPlayLiveUI.class,bundle);
+                            }else if(isVertical == DouYvUrl.vertical_screen_play){
+                                //ActivityUtils.openActivity(activity,VerticalPlayLiveUI.class,bundle);
+                                ActivityUtils.openActivity(activity,HorizontalPlayLiveUI.class,bundle);
+                            }
                         }
                     });
                 }

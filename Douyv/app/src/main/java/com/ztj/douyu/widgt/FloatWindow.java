@@ -7,20 +7,13 @@ import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
-import android.widget.ImageButton;
 
-import com.ztj.douyu.R;
-import com.ztj.douyu.bean.constant.RequestAndResultCode;
-import com.ztj.douyu.main.activity.MainActivity;
-import com.ztj.douyu.main.activity.PlayLiveUI;
-import com.ztj.douyu.utils.ActivityUtils;
+import com.ztj.douyu.main.activity.HorizontalPlayLiveUI;
 import com.ztj.douyu.utils.SystemUtils;
 import com.ztj.douyu.widgt.media.IjkVideoView;
 
@@ -132,7 +125,7 @@ public class FloatWindow {
                 //取消小窗口播放，跳转到PlayUI界面
                 Bundle bundle = new Bundle();
                 bundle.putString("play_url",mPlayUrl);
-                Intent intent = new Intent(mContext,PlayLiveUI.class);
+                Intent intent = new Intent(mContext,HorizontalPlayLiveUI.class);
                 intent.putExtras(bundle);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);

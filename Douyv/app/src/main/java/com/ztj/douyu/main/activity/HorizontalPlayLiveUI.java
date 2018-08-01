@@ -2,12 +2,8 @@ package com.ztj.douyu.main.activity;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.media.PlaybackParams;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
@@ -17,20 +13,14 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.MessageEvent;
-import com.ztj.douyu.bean.constant.RequestAndResultCode;
-import com.ztj.douyu.main.App;
 import com.ztj.douyu.main.presenter.PlayLivePresenter;
-import com.ztj.douyu.main.service.FloatWindowService;
 import com.ztj.douyu.main.view.onPlayLiveView;
-import com.ztj.douyu.utils.ActivityUtils;
 import com.ztj.douyu.utils.StringUtils;
-import com.ztj.douyu.widgt.FloatWindow;
 import com.ztj.douyu.widgt.media.IjkVideoView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,7 +33,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 /**
  *直播播放页面(普通游戏的非全屏的播放页面，颜值和全屏的播放页面实现后面再研究)
  */
-public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
+public class HorizontalPlayLiveUI extends AppCompatActivity implements onPlayLiveView {
 
     private static final int HIDE_VIEWS_MSG = 0;
     private String roomId;
@@ -277,15 +267,15 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
 
 
      static class ControlHandler extends Handler{
-        private WeakReference<PlayLiveUI> weakReference;
+        private WeakReference<HorizontalPlayLiveUI> weakReference;
 
-         public ControlHandler(PlayLiveUI activity) {
-             weakReference = new WeakReference<PlayLiveUI>(activity);
+         public ControlHandler(HorizontalPlayLiveUI activity) {
+             weakReference = new WeakReference<HorizontalPlayLiveUI>(activity);
          }
 
          @Override
          public void handleMessage(Message msg) {
-             PlayLiveUI activity = weakReference.get();
+             HorizontalPlayLiveUI activity = weakReference.get();
              if(activity!=null){
                  if(msg.what== HIDE_VIEWS_MSG){
                      activity.hideViews();

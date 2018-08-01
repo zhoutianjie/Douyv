@@ -29,7 +29,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.activity.PlayLiveUI"
+            android:name=".main.activity.HorizontalPlayLiveUI"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
+        <activity
+            android:name=".main.activity.VerticalPlayLiveUI"
             android:theme="@style/Theme.Design.Light.NoActionBar" />
 
         <!--enabled 指示这个service能否被实例化-->
