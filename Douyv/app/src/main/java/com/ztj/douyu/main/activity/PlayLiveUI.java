@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.ztj.douyu.R;
+import com.ztj.douyu.bean.MessageEvent;
 import com.ztj.douyu.bean.constant.RequestAndResultCode;
 import com.ztj.douyu.main.App;
 import com.ztj.douyu.main.presenter.PlayLivePresenter;
@@ -31,6 +32,8 @@ import com.ztj.douyu.utils.ActivityUtils;
 import com.ztj.douyu.utils.StringUtils;
 import com.ztj.douyu.widgt.FloatWindow;
 import com.ztj.douyu.widgt.media.IjkVideoView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.ref.WeakReference;
 
@@ -110,11 +113,7 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
         mBackImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putString("play_url",mPlayUrl);
-                intent.putExtras(bundle);
-                setResult(RequestAndResultCode.PLAYLIVE_RESULT,intent);
+                EventBusSendMessageEvent();
                 finish();
             }
         });
@@ -151,6 +150,7 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
     @Override
     public void onBackPressed() {
         isBackPressed = true;
+        EventBusSendMessageEvent();
         super.onBackPressed();
     }
 
@@ -266,6 +266,13 @@ public class PlayLiveUI extends AppCompatActivity implements onPlayLiveView {
             message.what = HIDE_VIEWS_MSG;
             mHandler.sendMessageDelayed(message,3000);
         }
+    }
+
+    //启动主界面的悬浮框
+    private void EventBusSendMessageEvent(){
+        MessageEvent messageEvent = new MessageEvent();
+        messageEvent.setUrl(mPlayUrl);
+        EventBus.getDefault().post(messageEvent);
     }
 
 

@@ -23,12 +23,15 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.RoomInfo;
 import com.ztj.douyu.bean.constant.RequestAndResultCode;
+import com.ztj.douyu.main.activity.MainActivity;
 import com.ztj.douyu.main.activity.PlayLiveUI;
 import com.ztj.douyu.main.adapter.RoomInfosAdapter;
 import com.ztj.douyu.main.presenter.ContentPresenter;
+import com.ztj.douyu.main.service.FloatWindowService;
 import com.ztj.douyu.main.view.onContentView;
 import com.ztj.douyu.utils.ActivityUtils;
 import com.ztj.douyu.utils.ToastObject;
+import com.ztj.douyu.widgt.FloatWindow;
 
 import java.util.List;
 
@@ -172,9 +175,12 @@ public class ContentFragment extends Fragment implements onContentView {
                     adapter.setOnItemClickListener(new RoomInfosAdapter.OnItemClickListener() {
                         @Override
                         public void onClick(int position, String roomId) {
+                            if(FloatWindowService.mIsFloatWindowShown){
+                                ((MainActivity)activity).stopFloatWindowService();
+                            }
                             Bundle bundle = new Bundle();
                             bundle.putString("roomId",roomId);
-                            ActivityUtils.openActivity(activity,PlayLiveUI.class,bundle, RequestAndResultCode.PLAYLIVE_REQUEST);
+                            ActivityUtils.openActivity(activity,PlayLiveUI.class,bundle);
                         }
                     });
                 }

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ztj.douyu.R;
+import com.ztj.douyu.bean.MessageEvent;
 import com.ztj.douyu.bean.constant.RequestAndResultCode;
 import com.ztj.douyu.main.App;
 import com.ztj.douyu.main.fragment.ClassifyFragment;
@@ -24,6 +25,9 @@ import com.ztj.douyu.main.fragment.MineFragment;
 import com.ztj.douyu.main.service.FloatWindowService;
 import com.ztj.douyu.utils.ActivityUtils;
 import com.ztj.douyu.utils.StringUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
         initView();
 
     }
@@ -73,25 +78,20 @@ public class MainActivity extends AppCompatActivity {
         return view;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==RESULT_CANCELED)return;
-        if(resultCode == RequestAndResultCode.PLAYLIVE_RESULT){
-           Bundle bundle = data.getExtras();
-           String url = bundle.getString("play_url");
-           if(!StringUtils.isNull(url)){
-               //url 为空则不显示小窗口
-               startFloatWindowService(url);
-           }
-
-        }
-    }
 
     @Override
     protected void onDestroy() {
-        stopService();
         super.onDestroy();
+        stopFloatWindowService();
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe
+    public void onEvent(MessageEvent event){
+        String url = event.getUrl();
+        if(StringUtils.isNull(url))return;
+        startFloatWindowService(url);
     }
 
     private void startFloatWindowService(String url){
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         startService(intent);
     }
 
-    private void stopService(){
+    public void stopFloatWindowService(){
         if(FloatWindowService.mIsFloatWindowShown){
             Intent intent = new Intent(MainActivity.this,FloatWindowService.class);
             stopService(intent);
