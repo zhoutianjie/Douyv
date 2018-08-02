@@ -68,7 +68,6 @@ public class GameTypesAdapter extends RecyclerView.Adapter<GameTypesAdapter.Game
 
         if(!StringUtils.isNull(iconUrl)){
             Glide.with(mContext).load(iconUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
                     .into(holder.gameIcon);
         }
         holder.gameTypeRl.setOnClickListener(new View.OnClickListener() {

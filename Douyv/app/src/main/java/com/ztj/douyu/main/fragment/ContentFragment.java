@@ -29,6 +29,7 @@ import com.ztj.douyu.main.presenter.ContentPresenter;
 import com.ztj.douyu.main.service.FloatWindowService;
 import com.ztj.douyu.main.view.onContentView;
 import com.ztj.douyu.utils.ActivityUtils;
+import com.ztj.douyu.utils.DataHolder;
 import com.ztj.douyu.utils.ToastObject;
 
 import java.util.List;
@@ -181,6 +182,10 @@ public class ContentFragment extends Fragment implements onContentView {
                             if(isVertical== DouYvUrl.horizontal_screen_play){
                                 ActivityUtils.openActivity(activity,HorizontalPlayLiveUI.class,bundle);
                             }else if(isVertical == DouYvUrl.vertical_screen_play){
+                                //把adapter中的数据集合传给VerticalPlayLiveUI，对应的roomId也传给VerticalPlayLiveUI
+                                //由于所传递的数据可能比较大，这里不用intent传，采用单例缓存
+
+                                DataHolder.getInstance();
                                 //ActivityUtils.openActivity(activity,VerticalPlayLiveUI.class,bundle);
                                 ActivityUtils.openActivity(activity,HorizontalPlayLiveUI.class,bundle);
                             }

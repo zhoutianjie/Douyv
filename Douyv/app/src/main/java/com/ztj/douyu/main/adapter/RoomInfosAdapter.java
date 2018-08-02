@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.ztj.douyu.R;
 import com.ztj.douyu.bean.RoomInfo;
 import com.ztj.douyu.bean.constant.DouYvUrl;
@@ -82,8 +83,10 @@ public class RoomInfosAdapter extends RecyclerView.Adapter<RoomInfosAdapter.Room
         }
         String src_url= roomInfo.getRoomSrc();
         if(!StringUtils.isNull(src_url)){
+            RequestOptions options = new RequestOptions()
+                    .placeholder(R.mipmap.douyv_default);
             Glide.with(mContext).load(src_url)
-                    .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                    .apply(options)
                     .into(holder.roomImg);
         }
         if(listener!=null){
