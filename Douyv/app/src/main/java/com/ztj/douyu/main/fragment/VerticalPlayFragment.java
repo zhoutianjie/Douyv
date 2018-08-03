@@ -54,7 +54,7 @@ public class VerticalPlayFragment extends Fragment{
         if(mRoomInfo!=null){
             Activity activity = getActivity();
             if(activity!=null){
-                RequestOptions options = new RequestOptions().centerCrop();
+                RequestOptions options = new RequestOptions().centerCrop().placeholder(R.mipmap.yz_default);
                 Glide.with(this)
                         .load(mRoomInfo.getVerticalSrc())
                         .apply(options)
