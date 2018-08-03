@@ -18,7 +18,9 @@
 ###正常界面播放  
 ![image](https://github.com/zhoutianjie/Douyv/blob/master/Douyv/ScreenShorts/play_small.png)  
 ###悬浮框播放  
-![image](https://github.com/zhoutianjie/Douyv/blob/master/Douyv/ScreenShorts/play_window.png)
+![image](https://github.com/zhoutianjie/Douyv/blob/master/Douyv/ScreenShorts/play_window.png)  
+###进入竖屏播放界面图片显示  
+![image](https://github.com/zhoutianjie/Douyv/blob/master/Douyv/ScreenShorts/yz_pic.png)  
 
 ### 系统架构  
 基本上采用的是MVP架构
