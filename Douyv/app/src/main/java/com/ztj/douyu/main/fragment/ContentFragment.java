@@ -30,6 +30,7 @@ import com.ztj.douyu.main.service.FloatWindowService;
 import com.ztj.douyu.main.view.onContentView;
 import com.ztj.douyu.utils.ActivityUtils;
 import com.ztj.douyu.utils.DataHolder;
+import com.ztj.douyu.utils.StringUtils;
 import com.ztj.douyu.utils.ToastObject;
 
 import java.util.List;
@@ -183,11 +184,19 @@ public class ContentFragment extends Fragment implements onContentView {
                                 ActivityUtils.openActivity(activity,HorizontalPlayLiveUI.class,bundle);
                             }else if(isVertical == DouYvUrl.vertical_screen_play){
                                 //把adapter中的数据集合传给VerticalPlayLiveUI，对应的roomId也传给VerticalPlayLiveUI
+                                //用于构建VetricalViewPager
                                 //由于所传递的数据可能比较大，这里不用intent传，采用单例缓存
+                                List<RoomInfo> tmp = adapter.getData();
+                                DataHolder.getInstance().save("room_info_list",tmp);
 
-                                DataHolder.getInstance();
-                                //ActivityUtils.openActivity(activity,VerticalPlayLiveUI.class,bundle);
-                                ActivityUtils.openActivity(activity,HorizontalPlayLiveUI.class,bundle);
+                                //当前打开的房间封面图片预加载
+                                RoomInfo info = GetRoomInfoByRoomId(roomId,tmp);
+                                if(info!=null){
+                                    Glide.with(activity).load(info.getVerticalSrc()).preload();
+                                }
+
+                                ActivityUtils.openActivity(activity,VerticalPlayLiveUI.class,bundle);
+                                //ActivityUtils.openActivity(activity,HorizontalPlayLiveUI.class,bundle);
                             }
                         }
                     });
@@ -275,5 +284,21 @@ public class ContentFragment extends Fragment implements onContentView {
                 smartRefreshLayout.finishLoadMoreWithNoMoreData();
             }
         });
+    }
+
+    /**
+     * 根据RoomId来获取RoomInfo
+     * @param roomId
+     * @param infos
+     * @return
+     */
+    private RoomInfo GetRoomInfoByRoomId(String roomId,List<RoomInfo> infos){
+        if(StringUtils.isNull(roomId) || infos==null || infos.isEmpty())return null;
+        for(RoomInfo info:infos){
+            if(StringUtils.equals(info.getRoomId(),roomId)){
+                return info;
+            }
+        }
+        return null;
     }
 }

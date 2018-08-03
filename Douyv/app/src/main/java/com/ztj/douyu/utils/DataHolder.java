@@ -3,6 +3,7 @@ package com.ztj.douyu.utils;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -15,7 +16,7 @@ public class DataHolder {
     private Map<String,WeakReference<Object>> data;
 
     private DataHolder(){
-        data = new HashMap<String, WeakReference<Object>>();
+        data = new ConcurrentHashMap<>();
     }
 
     private static  class Inner{

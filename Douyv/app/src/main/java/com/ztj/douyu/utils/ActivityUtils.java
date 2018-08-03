@@ -9,6 +9,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.ztj.douyu.R;
+
 import java.lang.reflect.Method;
 
 
@@ -34,6 +36,7 @@ public class ActivityUtils {
         }else{
             activity.startActivityForResult(intent,requestCode);
         }
+        activity.overridePendingTransition(R.anim.hearbeat_enter, R.anim.hearbeat_exit);
     }
 
     public static boolean hasPermissionFloatWin(Context context){

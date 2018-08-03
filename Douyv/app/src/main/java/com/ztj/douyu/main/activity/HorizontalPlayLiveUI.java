@@ -179,6 +179,7 @@ public class HorizontalPlayLiveUI extends AppCompatActivity implements onPlayLiv
                 mVideoView.setOnPreparedListener(new IMediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(IMediaPlayer mp) {
+                        Log.e("onPrepared","start");
                         mVideoView.start();
                     }
                 });

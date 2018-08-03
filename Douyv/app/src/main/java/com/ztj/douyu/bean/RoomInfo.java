@@ -225,4 +225,21 @@ public class RoomInfo {
                 ", anchorCity='" + anchorCity + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+        if(obj == null){
+            return false;
+        }
+
+        if(getClass() !=obj.getClass()){
+            return false;
+        }
+
+        RoomInfo other = (RoomInfo) obj;
+        return this.roomId.equals(other.roomId);
+    }
 }
