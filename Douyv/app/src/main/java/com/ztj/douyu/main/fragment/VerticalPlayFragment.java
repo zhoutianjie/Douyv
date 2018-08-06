@@ -107,7 +107,7 @@ public class VerticalPlayFragment extends Fragment implements onPlayLiveView {
     public void onDestroyView() {
         super.onDestroyView();
         isInitView = false;
-        isLoadSuccess = false;
+
     }
 
     @Override
@@ -124,13 +124,14 @@ public class VerticalPlayFragment extends Fragment implements onPlayLiveView {
         if(!isInitView){
             return;
         }
-        if(getUserVisibleHint() &&!isLoadSuccess){
+        if(getUserVisibleHint()){
             Log.e("FragmentV",mRoomInfo.getNickName()+" request url");
             lazyLoad();
         }else{
            if(mVideoView!=null && mVideoView.isPlaying()){
                Log.e("FragmentV",mRoomInfo.getNickName()+" release");
                mVideoView.release(true);
+
            }
         }
     }
@@ -148,7 +149,7 @@ public class VerticalPlayFragment extends Fragment implements onPlayLiveView {
     public void onGetLiveRoomUrlInfo(final String liveUrl) {
         Log.e("FragmentV",mRoomInfo.getNickName()+" liveUrl"+liveUrl);
         if(StringUtils.isNull(liveUrl))return;
-        isLoadSuccess = true;
+
         Log.e("FragmentV","liveUrl is not null");
         mRootView.post(new Runnable() {
             @Override
