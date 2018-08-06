@@ -93,6 +93,11 @@ public class RoomInfosAdapter extends RecyclerView.Adapter<RoomInfosAdapter.Room
                     .apply(options)
                     .into(holder.roomImg);
         }
+
+        if(roomInfo.getIsVertical()==DouYvUrl.vertical_screen_play && !StringUtils.isNull(roomInfo.getVerticalSrc())){
+            Glide.with(mContext).load(roomInfo.getVerticalSrc()).preload();
+        }
+
         if(listener!=null){
             holder.roomLL.setOnClickListener(new View.OnClickListener() {
                 @Override
